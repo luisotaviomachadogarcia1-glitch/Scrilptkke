@@ -849,4 +849,40 @@ local function createMenu()
         end
     end)
 
-    UserInputService.InputBegan
+        UserInputService.InputBegan:Connect(function(input, gp)
+        if not gp and input.KeyCode == Enum.KeyCode.Insert then
+            if MainFrame.Visible then
+                MainFrame.Visible = false
+                OpenBtn.Visible = true
+            else
+                MainFrame.Visible = true
+                OpenBtn.Visible = false
+            end
+        end
+    end)
+end
+
+-- ==================== INICIALIZAÇÃO ====================
+
+setupInfiniteJump()
+setupNoClip()
+setupAimbot()
+setupESP()
+createMenu()
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+    local humanoid = character:WaitForChild("Humanoid", 10)
+    if humanoid then
+        humanoid.WalkSpeed = Config.WalkSpeed
+        humanoid.JumpPower = Config.JumpPower
+        humanoid.UseJumpPower = true
+    end
+end)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Universal Script",
+    Text = "Carregado! Aimbot trava na cabeça | E",
+    Duration = 3
+})
+
+print("[Universal Script] Carregado!")
